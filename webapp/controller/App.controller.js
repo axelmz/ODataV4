@@ -58,6 +58,18 @@ sap.ui.define([
 			});
 		},
 
+		onDelete : function () {
+			var oSelected = this.byId("peopleList").getSelectedItem();
+
+			if (oSelected) {
+				oSelected.getBindingContext().delete("$auto").then(function () {
+					MessageToast.show(this._getText("deletionSuccessMessage"));
+				}.bind(this), function (oError) {
+					MessageBox.error(oError.message);
+				});
+			}
+		},
+
 		onInputChange : function (oEvt) {
 			if (oEvt.getParameter("escPressed")) {
 				this._setUIChanges();
@@ -81,8 +93,10 @@ sap.ui.define([
 		},
 
 		onResetChanges : function () {
+			// @ts-ignore
 			this.byId("peopleList").getBinding("items").resetChanges();
 			this._bTechnicalErrors = false; 
+			// @ts-ignore
 			this._setUIChanges();
 		},
 
@@ -99,7 +113,9 @@ sap.ui.define([
 				MessageBox.error(oError.message);
 			}.bind(this);
 
+			// @ts-ignore
 			this._setBusy(true); // Lock UI until submitBatch is resolved.
+			// @ts-ignore
 			this.getView().getModel().submitBatch("peopleGroup").then(fnSuccess, fnError);
 			this._bTechnicalErrors = false; // If there were technical errors, a new save resets them.
 		},
@@ -144,6 +160,7 @@ sap.ui.define([
 			});
 			sap.ui.getCore().getMessageManager().removeMessages(aMessages);
 
+			// @ts-ignore
 			this._setUIChanges(true);
 			this._bTechnicalErrors = true;
 			MessageBox.error(aMessages[0].message, {
