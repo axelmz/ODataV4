@@ -5,8 +5,8 @@ type: application
 resources:
   configuration:
     paths: # ./webapp para compilar (ui5 build) y ./dist para ejecutar el compilado (ui5 serve)
-#      webapp: ./webapp
-      webapp: ./dist
+      webapp: ./webapp
+#      webapp: ./dist
 server:
   customMiddleware:
   - name: fiori-tools-proxy
